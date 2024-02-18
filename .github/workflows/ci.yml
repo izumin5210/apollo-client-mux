@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - "**"
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    strategy:
+      matrix:
+        commands:
+          - { name: "lint", run: "pnpm lint" }
+          - { name: "typecheck", run: "pnpm typecheck" }
+          - { name: "build", run: "pnpm build" }
+          - { name: "test", run: "pnpm test" }
+        node-version: ['18', '20']
+      fail-fast: false
+    name: ${{ matrix.commands.name }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Run `${{ matrix.commands.run }}`
+        run: |
+          ${{ matrix.commands.run }}
+      - name: check generated code is up to date
+        run: |
+          echo 'Check git diff to ensure `${{ matrix.commands.run }}` has been done in this commit.'
+          git diff --exit-code
