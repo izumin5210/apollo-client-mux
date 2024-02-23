@@ -1,6 +1,6 @@
 {
   "name": "apollo-client-mux",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "multiple GraphQL endpoints within a single Apollo Client instance",
   "type": "module",
   "main": "dist/index.js",
@@ -38,11 +38,18 @@
     "gen:graph2": "graphql-codegen --project graph2",
     "lint": "biome check --apply src",
     "typecheck": "tsc -p . --noEmit",
-    "test": "vitest"
+    "test": "vitest",
+    "release:stable": "pnpm build && pnpm publish",
+    "release:prepare": "pnpm build",
+    "release:snapshot": "pnpm release:prepare && pnpm release:snapshot:version && pnpm release:snapshot:publish",
+    "release:snapshot:version": "changeset version --snapshot next",
+    "release:snapshot:publish": "changeset publish --no-git-tag --snapshot --tag next"
   },
   "devDependencies": {
     "@apollo/client": "^3.9.5",
     "@biomejs/biome": "1.5.3",
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.1",
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/client-preset": "^4.2.4",
     "@graphql-codegen/typescript-resolvers": "^4.0.6",
