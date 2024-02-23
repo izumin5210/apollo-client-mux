@@ -3,7 +3,7 @@ description: 'Setup Node.js environment'
 inputs:
   node-version:
     description: 'The Node.js version to use'
-    default: 'lts'
+    default: 'latest'
 runs:
   using: 'composite'
   steps:
