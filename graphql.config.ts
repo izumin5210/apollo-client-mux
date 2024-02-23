@@ -1,6 +1,6 @@
-import type { IGraphQLConfig } from "graphql-config";
 import type { CodegenConfig } from "@graphql-codegen/cli";
-import { addEndpointDirectiveTransform } from "./src/transform";
+import type { IGraphQLConfig } from "graphql-config";
+import { addEndpointDirectiveForCodegen } from "./src/transform";
 
 const config: IGraphQLConfig = {
   projects: {
@@ -37,16 +37,9 @@ const config: IGraphQLConfig = {
               plugins: ["typescript-resolvers"],
               documentTransforms: [
                 {
-                  transform: ({ documents }) => {
-                    return documents.map((documentFile) => {
-                      if (documentFile.document == null) return documentFile;
-                      documentFile.document = addEndpointDirectiveTransform({
-                        endpointName: "graph2",
-                      }).transformDocument(documentFile.document);
-
-                      return documentFile;
-                    });
-                  },
+                  transform: addEndpointDirectiveForCodegen({
+                    endpointName: "graph2",
+                  }),
                 },
               ],
             },

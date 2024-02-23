@@ -11,6 +11,15 @@ type EndpointDirectiveTransformerArgs = {
   directiveArgName?: string;
 };
 
+type DocumentTransformForCodegen<
+  TDocumentFile extends {
+    document: DocumentNode | null;
+  },
+  TArgs extends {
+    documents: ReadonlyArray<TDocumentFile>;
+  },
+> = (args: TArgs) => TDocumentFile[];
+
 /**
  *
  * @example with graphql-codegen
@@ -24,16 +33,7 @@ type EndpointDirectiveTransformerArgs = {
  *       },
  *       documentTransforms: [
  *         {
- *           transform: ({ documents }) => {
- *             return documents.map((documentFile) => {
- *               if (documentFile.document == null) return documentFile;
- *               documentFile.document = addEndpointDirectiveTransform({
- *                 endpointName: "graph2",
- *               }).transformDocument(documentFile.document);
- *
- *               return documentFile;
- *             });
- *           },
+ *           transform: addEndpointDirectiveForCodegen({ endpointName: "graph2" }),
  *         },
  *       ],
  *     },
@@ -41,6 +41,28 @@ type EndpointDirectiveTransformerArgs = {
  * }
  * ```
  */
+export function addEndpointDirectiveForCodegen<
+  TDocumentFile extends {
+    document: DocumentNode | null;
+  },
+  TArgs extends {
+    documents: ReadonlyArray<TDocumentFile>;
+  },
+>(
+  args: EndpointDirectiveTransformerArgs,
+): DocumentTransformForCodegen<TDocumentFile, TArgs> {
+  return function transform({ documents }) {
+    const transformer = addEndpointDirectiveTransform(args);
+    return documents.map((documentFile) => {
+      if (documentFile.document == null) return documentFile;
+      documentFile.document = transformer.transformDocument(
+        documentFile.document,
+      );
+      return documentFile;
+    });
+  };
+}
+
 export function addEndpointDirectiveTransform(
   args: EndpointDirectiveTransformerArgs,
 ) {
