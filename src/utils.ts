@@ -1,4 +1,3 @@
-import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import {
   DocumentNode,
   FragmentDefinitionNode,
@@ -13,7 +12,7 @@ export function getEndpointName({
   directiveName,
   directiveArgName,
 }: {
-  documentNode: DocumentNode | TypedDocumentNode;
+  documentNode: DocumentNode;
   directiveName: string;
   directiveArgName: string;
 }): string | undefined {

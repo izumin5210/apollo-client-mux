@@ -30,6 +30,7 @@
     "@graphql-codegen/client-preset": "^4.2.4",
     "@graphql-codegen/typescript-resolvers": "^4.0.6",
     "@graphql-tools/schema": "^10.0.2",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@tsconfig/strictest": "^2.0.3",
     "@types/node": "^20.0.0",
     "graphql": "^16.8.1",
@@ -41,8 +42,5 @@
   "peerDependencies": {
     "@apollo/client": "^3.8.0",
     "graphql": "^16.0.0"
-  },
-  "dependencies": {
-    "@graphql-typed-document-node/core": "^3.2.0"
   }
 }
