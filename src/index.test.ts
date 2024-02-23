@@ -3,14 +3,8 @@ import { SchemaLink } from "@apollo/client/link/schema";
 import { beforeEach, expect, test } from "vitest";
 
 import { createApolloLinkMux, ApolloCacheMux } from ".";
-import {
-  fragment1,
-  fragment2,
-  query1,
-  query2,
-  schema1,
-  schema2,
-} from "./test/fixtures";
+import { fragment1, query1, schema1 } from "./test/graph1";
+import { fragment2, query2, schema2 } from "./test/graph2";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 let cache: ApolloCache<any>;
@@ -103,10 +97,10 @@ test("the cache can be update fragment cache", async () => {
     client.readFragment({
       fragment: fragment2,
       id: "User:2",
-    }).login,
+    })?.login,
   ).toEqual("bob-new");
 
-  expect((await client.query({ query: query2 })).data.users[1].login).toEqual(
+  expect((await client.query({ query: query2 })).data.users[1]?.login).toEqual(
     "bob-new",
   );
 });
