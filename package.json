@@ -1,7 +1,7 @@
 {
   "name": "apollo-client-mux",
   "version": "0.0.1",
-  "description": "Apollo link and cache for multiplexing multilpe GraphQL endpoints",
+  "description": "multiple GraphQL endpoints within a single Apollo Client instance",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
