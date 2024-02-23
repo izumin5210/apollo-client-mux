@@ -34,3 +34,12 @@ jobs:
         run: |
           echo 'Check git diff to ensure `${{ matrix.commands.run }}` has been done in this commit.'
           git diff --exit-code
+
+  changesets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node
+      - name: Check changesets
+        run: pnpm changeset status --since=origin/main
+    if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'changeset-release/')
