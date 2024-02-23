@@ -1,5 +1,5 @@
 import { DocumentTransform } from "@apollo/client/utilities";
-import { visit, Kind, type DocumentNode, DirectiveNode } from "graphql";
+import { DirectiveNode, type DocumentNode, Kind, visit } from "graphql";
 
 import { defaultDirectiveArgName, defaultDirectiveName } from "./constants";
 

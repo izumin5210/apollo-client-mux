@@ -2,7 +2,7 @@ import { ApolloCache, ApolloClient, InMemoryCache } from "@apollo/client/core";
 import { SchemaLink } from "@apollo/client/link/schema";
 import { beforeEach, expect, test } from "vitest";
 
-import { createApolloLinkMux, ApolloCacheMux } from ".";
+import { ApolloCacheMux, createApolloLinkMux } from ".";
 import { fragment1, query1, schema1 } from "./test/graph1";
 import { fragment2, query2, schema2 } from "./test/graph2";
 
