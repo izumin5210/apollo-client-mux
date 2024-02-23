@@ -19,6 +19,9 @@ const config: IGraphQLConfig = {
               plugins: ["typescript-resolvers"],
             },
           },
+          hooks: {
+            afterAllFileWrite: ["biome check --apply"],
+          },
         } satisfies CodegenConfig,
       },
     },
@@ -43,6 +46,9 @@ const config: IGraphQLConfig = {
                 },
               ],
             },
+          },
+          hooks: {
+            afterAllFileWrite: ["biome check --apply"],
           },
         } satisfies CodegenConfig,
       },
