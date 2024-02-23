@@ -28,7 +28,7 @@ type EndpointDirectiveTransformerArgs = {
  *             return documents.map((documentFile) => {
  *               if (documentFile.document == null) return documentFile;
  *               documentFile.document = addEndpointDirectiveTransform({
- *                 endpointName: "workflow",
+ *                 endpointName: "graph2",
  *               }).transformDocument(documentFile.document);
  *
  *               return documentFile;
