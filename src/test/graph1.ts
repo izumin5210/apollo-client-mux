@@ -31,7 +31,7 @@ const resolvers: Resolvers = {
 };
 
 export const schema1 = makeExecutableSchema({
-  typeDefs: readFileSync(join(__dirname, "graph1schema.graphql"), {
+  typeDefs: readFileSync(join(__dirname, "graph1Schema.graphql"), {
     encoding: "utf8",
   }),
   resolvers,
