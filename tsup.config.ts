@@ -1,10 +1,9 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ['src'],
-  format: ['cjs', 'esm'],
-  splitting: true,
+  entry: ["src/index.ts", "src/transform.ts"],
+  format: ["cjs", "esm"],
   sourcemap: true,
-  dts: true,
   clean: true,
+  onSuccess: "pnpm tsc --project tsconfig.build.json",
 });

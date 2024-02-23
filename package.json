@@ -2,17 +2,25 @@
   "name": "apollo-link-mux",
   "version": "0.0.1",
   "description": "Apollo Link for multiplexing multilpe GraphQL endpoints",
-  "main": "lib/index.js",
   "type": "module",
-  "scripts": {
-    "build": "tsup",
-    "gen": "pnpm gen:graph1 && pnpm gen:graph2",
-    "gen:graph1": "graphql-codegen --project graph1",
-    "gen:graph2": "graphql-codegen --project graph2",
-    "lint": "biome check --apply src",
-    "typecheck": "tsc -p . --noEmit",
-    "test": "vitest"
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./transform": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
   },
+  "files": [
+    "src",
+    "dist"
+  ],
   "keywords": [
     "graphql",
     "apollo",
@@ -23,6 +31,15 @@
   "author": "izumin5210 <m@izum.in>",
   "license": "MIT",
   "packageManager": "pnpm@8.15.3+sha256.fc4a49bd609550a41e14d20efbce802a4b892aa4cac877322de2f0924f122991",
+  "scripts": {
+    "build": "tsup",
+    "gen": "pnpm gen:graph1 && pnpm gen:graph2",
+    "gen:graph1": "graphql-codegen --project graph1",
+    "gen:graph2": "graphql-codegen --project graph2",
+    "lint": "biome check --apply src",
+    "typecheck": "tsc -p . --noEmit",
+    "test": "vitest"
+  },
   "devDependencies": {
     "@apollo/client": "^3.9.5",
     "@biomejs/biome": "1.5.3",
