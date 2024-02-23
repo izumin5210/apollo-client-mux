@@ -6,6 +6,9 @@
   "type": "module",
   "scripts": {
     "build": "tsup",
+    "gen": "pnpm gen:graph1 && pnpm gen:graph2",
+    "gen:graph1": "graphql-codegen --project graph1",
+    "gen:graph2": "graphql-codegen --project graph2",
     "lint": "biome check --apply src",
     "typecheck": "tsc -p . --noEmit",
     "test": "vitest"

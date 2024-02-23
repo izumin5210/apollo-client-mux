@@ -17,6 +17,7 @@ jobs:
           - { name: "typecheck", run: "pnpm typecheck" }
           - { name: "build", run: "pnpm build" }
           - { name: "test", run: "pnpm test" }
+          - { name: "gen", run: "pnpm gen" }
         node-version: ['18', '20']
       fail-fast: false
     name: ${{ matrix.commands.name }} - Node.js ${{ matrix.node-version }}
