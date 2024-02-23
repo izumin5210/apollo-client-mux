@@ -1,0 +1,17 @@
+name: 'Setup Node.js environment'
+description: 'Setup Node.js environment'
+inputs:
+  node-version:
+    description: 'The Node.js version to use'
+    default: 'lts'
+runs:
+  using: 'composite'
+  steps:
+    - run: corepack enable
+      shell: bash
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: 'pnpm'
+    - run: pnpm install --frozen-lockfile
+      shell: bash
