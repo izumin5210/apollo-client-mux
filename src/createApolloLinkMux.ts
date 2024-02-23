@@ -11,7 +11,7 @@ export function createApolloLinkMux({
   directiveArgName = defaultDirectiveArgName,
 }: {
   links: Record<string, ApolloLink>;
-  defaultLink: ApolloLink;
+  defaultLink?: ApolloLink;
   /** @defaultValue `"endpoint"` */
   directiveName?: string;
   /** @defaultValue `"name"` */
@@ -31,19 +31,31 @@ export function createApolloLinkMux({
     return forward(operation);
   });
 
-  let composedLink = ApolloLink.from([removeDirectiveLink, defaultLink]);
+  let composedLink: ApolloLink | undefined;
+  if (defaultLink) {
+    composedLink = ApolloLink.from([removeDirectiveLink, defaultLink]);
+  }
 
-  for (const [name, link] of objectEntries(links)) {
-    composedLink = ApolloLink.split(
-      (operation) =>
-        getEndpointName({
-          documentNode: operation.query,
-          directiveName,
-          directiveArgName,
-        }) === name,
-      ApolloLink.from([removeDirectiveLink, link]),
-      composedLink,
-    );
+  for (const [name, _link] of objectEntries(links)) {
+    const link = ApolloLink.from([removeDirectiveLink, _link]);
+    if (composedLink == null) {
+      composedLink = link;
+    } else {
+      composedLink = ApolloLink.split(
+        (operation) =>
+          getEndpointName({
+            documentNode: operation.query,
+            directiveName,
+            directiveArgName,
+          }) === name,
+        ApolloLink.from([removeDirectiveLink, link]),
+        composedLink,
+      );
+    }
+  }
+
+  if (composedLink == null) {
+    throw new Error("At least one link must be provided");
   }
 
   return composedLink;

@@ -16,7 +16,7 @@ type NamespaceCacheOptions<
   caches: {
     readonly [K in keyof TSerializedMap]: ApolloCache<TSerializedMap[K]>;
   };
-  defaultCache: ApolloCache<TDefaultSerialized>;
+  defaultCache?: ApolloCache<TDefaultSerialized> | undefined;
   directiveName?: string;
   directiveArgName?: string;
 };
@@ -26,7 +26,7 @@ type NamespaceCacheSerialized<
   TSerializedMap extends Record<string, any>,
   TDefaultSerialized,
 > = {
-  default: TDefaultSerialized;
+  default?: TDefaultSerialized | undefined;
   namespaced: TSerializedMap;
 };
 
@@ -67,7 +67,12 @@ export class ApolloCacheMux<
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   private getCache(doc: DocumentNode): ApolloCache<any> {
     const name = this.getCacheName(doc);
-    if (name === null) return this.options.defaultCache;
+    if (name === null) {
+      if (this.options.defaultCache == null) {
+        throw new Error("No default cache provided");
+      }
+      return this.options.defaultCache;
+    }
 
     const cache = this.options.caches[name];
     if (cache == null) {
@@ -78,7 +83,12 @@ export class ApolloCacheMux<
 
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   private listAllCaches(): ApolloCache<any>[] {
-    return [...objectValues(this.options.caches), this.options.defaultCache];
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    let caches: ApolloCache<any>[] = objectValues(this.options.caches);
+    if (this.options.defaultCache) {
+      caches = [...caches, this.options.defaultCache];
+    }
+    return caches;
   }
 
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -123,9 +133,15 @@ export class ApolloCacheMux<
       TDefaultSerialized
     >,
   ): ApolloCache<NamespaceCacheSerialized<TSerializedMap, TDefaultSerialized>> {
-    const defaultCache = this.options.defaultCache.restore(
-      serializedState.default,
-    );
+    let defaultCache: ApolloCache<TDefaultSerialized> | undefined;
+    if (this.options.defaultCache) {
+      if (serializedState.default == null) {
+        throw new Error("No default cache serialized state provided");
+      }
+      defaultCache = this.options.defaultCache?.restore(
+        serializedState?.default,
+      );
+    }
     const caches = {} as {
       [K in keyof TSerializedMap]: ApolloCache<TSerializedMap[K]>;
     };
@@ -145,7 +161,7 @@ export class ApolloCacheMux<
       TSerializedMap,
       TDefaultSerialized
     > = {
-      default: this.options.defaultCache.extract(optimistic),
+      default: this.options.defaultCache?.extract(optimistic),
       namespaced: {} as TSerializedMap,
     };
     for (const [name, cache] of objectEntries(this.options.caches)) {
