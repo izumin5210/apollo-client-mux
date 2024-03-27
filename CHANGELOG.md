@@ -1,5 +1,11 @@
 # apollo-client-mux
 
+## 0.0.2
+
+### Patch Changes
+
+- [#8](https://github.com/izumin5210/apollo-client-mux/pull/8) [`17063fa`](https://github.com/izumin5210/apollo-client-mux/commit/17063fadef3457b520a99394e833da3447404ceb) Thanks [@izumin5210](https://github.com/izumin5210)! - fix `./transform` import path
+
 ## 0.0.1
 
 ### Patch Changes
