@@ -12,9 +12,9 @@
       "types": "./dist/index.d.ts"
     },
     "./transform": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/transform.cjs",
+      "import": "./dist/transform.js",
+      "types": "./dist/transform.d.ts"
     }
   },
   "files": [
