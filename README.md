@@ -33,16 +33,18 @@ export default config;
 
 ```ts
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
-import { ApolloCacheMux, createApolloLinkMux } from "apollo-client-mux";
+import { ApolloCacheMux, withCacheMux } from "apollo-client-mux";
 
 // create ApolloCache
+const InMemoryCacheMux = withCacheMux(InMemoryCache);
 const yourEndpointCache = new InMemoryCache();
-const defaultCache = new InMemoryCache();
-const cache = new ApolloCacheMux({
-  caches: {
-    yourEndpoint: yourEndpointCache, // <-- use your endopint name
-  },
-  defaultCache: defaultCache,
+const cache = new InMemoryCacheMux({
+  mux:{
+    caches: {
+      yourEndpoint: yourEndpointCache, // <-- use your endopint name
+    },
+  }
+  // ... options for default cache
 });
 
 // create ApolloLink

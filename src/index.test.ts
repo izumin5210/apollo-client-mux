@@ -2,7 +2,7 @@ import { ApolloCache, ApolloClient, InMemoryCache } from "@apollo/client/core";
 import { SchemaLink } from "@apollo/client/link/schema";
 import { beforeEach, expect, test } from "vitest";
 
-import { ApolloCacheMux, createApolloLinkMux } from ".";
+import { createApolloLinkMux, withCacheMux } from ".";
 import { fragment1, query1, schema1 } from "./test/graph1";
 import { fragment2, query2, schema2 } from "./test/graph2";
 
@@ -12,10 +12,12 @@ let cache: ApolloCache<any>;
 let client: ApolloClient<any>;
 
 beforeEach(() => {
-  cache = new ApolloCacheMux({
-    defaultCache: new InMemoryCache(),
-    caches: {
-      graph2: new InMemoryCache(),
+  const InMemoryCacheMux = withCacheMux(InMemoryCache);
+  cache = new InMemoryCacheMux({
+    mux: {
+      caches: {
+        graph2: new InMemoryCache(),
+      },
     },
   });
 
@@ -58,10 +60,12 @@ test("the cache can be extracted and restored", async () => {
   await client.query({ query: query1 });
   await client.query({ query: query2 });
 
-  const newCache = new ApolloCacheMux({
-    defaultCache: new InMemoryCache(),
-    caches: {
-      graph2: new InMemoryCache(),
+  const InMemoryCacheMux = withCacheMux(InMemoryCache);
+  const newCache = new InMemoryCacheMux({
+    mux: {
+      caches: {
+        graph2: new InMemoryCache(),
+      },
     },
   });
 
