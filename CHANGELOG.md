@@ -1,5 +1,11 @@
 # apollo-client-mux
 
+## 0.0.3
+
+### Patch Changes
+
+- [#10](https://github.com/izumin5210/apollo-client-mux/pull/10) [`ff4d605`](https://github.com/izumin5210/apollo-client-mux/commit/ff4d605e8fe16beb880bc7593861281ea92a3e7e) Thanks [@izumin5210](https://github.com/izumin5210)! - support custom cache class (e.g. NextSSRInMemoryCache)
+
 ## 0.0.2
 
 ### Patch Changes
