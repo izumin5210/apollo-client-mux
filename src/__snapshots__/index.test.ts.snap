@@ -178,73 +178,73 @@ exports[`the request is branched by the @endpoint directive, and the cache key i
 
 exports[`the request is branched by the @endpoint directive, and the cache key is separated 7`] = `
 {
-  "default": {
-    "ROOT_QUERY": {
-      "__typename": "Query",
-      "users": [
-        {
-          "__ref": "User:1",
-        },
-        {
-          "__ref": "User:2",
-        },
-        {
-          "__ref": "User:3",
-        },
-      ],
-    },
-    "User:1": {
-      "__typename": "User",
-      "email": "alice@example.com",
-      "id": "1",
-      "name": "Alice",
-    },
-    "User:2": {
-      "__typename": "User",
-      "email": "bob@example.com",
-      "id": "2",
-      "name": "Bob",
-    },
-    "User:3": {
-      "__typename": "User",
-      "email": "charlie@example.com",
-      "id": "3",
-      "name": "Charlie",
-    },
+  "ROOT_QUERY": {
+    "__typename": "Query",
+    "users": [
+      {
+        "__ref": "User:1",
+      },
+      {
+        "__ref": "User:2",
+      },
+      {
+        "__ref": "User:3",
+      },
+    ],
   },
-  "namespaced": {
-    "graph2": {
-      "ROOT_QUERY": {
-        "__typename": "Query",
-        "users": [
-          {
-            "__ref": "User:1",
-          },
-          {
-            "__ref": "User:2",
-          },
-          {
-            "__ref": "User:3",
-          },
-        ],
-      },
-      "User:1": {
-        "__typename": "User",
-        "id": "1",
-        "login": "alice",
-        "name": "Alice",
-      },
-      "User:2": {
-        "__typename": "User",
-        "id": "2",
-        "login": "bob",
-        "name": "Bob",
-      },
-      "User:3": {
-        "__typename": "User",
-        "id": "3",
-        "login": "charlie",
-        "name": "Charlie",
+  "User:1": {
+    "__typename": "User",
+    "email": "alice@example.com",
+    "id": "1",
+    "name": "Alice",
+  },
+  "User:2": {
+    "__typename": "User",
+    "email": "bob@example.com",
+    "id": "2",
+    "name": "Bob",
+  },
+  "User:3": {
+    "__typename": "User",
+    "email": "charlie@example.com",
+    "id": "3",
+    "name": "Charlie",
+  },
+  "__MUX": {
+    "caches": {
+      "graph2": {
+        "ROOT_QUERY": {
+          "__typename": "Query",
+          "users": [
+            {
+              "__ref": "User:1",
+            },
+            {
+              "__ref": "User:2",
+            },
+            {
+              "__ref": "User:3",
+            },
+          ],
+        },
+        "User:1": {
+          "__typename": "User",
+          "id": "1",
+          "login": "alice",
+          "name": "Alice",
+        },
+        "User:2": {
+          "__typename": "User",
+          "id": "2",
+          "login": "bob",
+          "name": "Bob",
+        },
+        "User:3": {
+          "__typename": "User",
+          "id": "3",
+          "login": "charlie",
+          "name": "Charlie",
+        },
       },
     },
   },

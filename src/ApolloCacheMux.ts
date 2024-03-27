@@ -145,12 +145,15 @@ export function withCacheMux<TCache extends InMemoryCache>(
       return evicted;
     }
 
-    override restore({ __MUX: muxData, ...data }: NormalizedCacheObject) {
+    override restore(_data: NormalizedCacheObject) {
+      const { __MUX: muxData, ...data } = _data as NamespaceCacheSerialized;
       super.restore(data);
-      for (const [name, cache] of objectEntries(this.muxOptions.caches)) {
-        this.muxOptions.caches[name] = cache.restore(
-          (data as NamespaceCacheSerialized).__MUX.caches[name] ?? {},
-        );
+      for (const [name, data] of objectEntries(muxData.caches)) {
+        const cache = this.muxOptions.caches[name];
+        if (cache == null) {
+          throw new Error(`No cache found for namespace ${name}`);
+        }
+        cache.restore(data);
       }
       return this;
     }
